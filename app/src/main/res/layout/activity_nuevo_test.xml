@@ -11,4 +11,42 @@
     android:orientation="vertical"
     tools:context="com.example.borja.practicastta.NuevoTest">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Este es el enunciado de la primera pregunta del test. Elija sabiamente"/>
+    <RadioGroup
+        android:id="@+id/test_choices"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Versión de la app"
+            />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Listado de componentes"
+            />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Opciones del menú"
+            />
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="42"
+            />
+    </RadioGroup>
+    <Button
+        android:id="@+id/button_sendTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:onClick="send"
+
+        />
+
 </LinearLayout>
