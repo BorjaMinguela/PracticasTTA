@@ -15,14 +15,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bienvenido"
+        android:text="@string/menu_welcome"
         android:gravity="center"
         android:textSize="25dp"
         />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lección 1"
+        android:text="@string/menu_lesson1"
         android:gravity="center"
         android:textSize="18dp"
         />
@@ -30,15 +30,15 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevo Test"
+        android:text="@string/menu_nuevo_test"
         android:onClick="newTest"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevo Ejercicio"/>
+        android:text="@string/menu_nuevo_ejercicio"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nuevo Seguimiento"/>
+        android:text="@string/menu_nuevo_seguimiento"/>
     
 </LinearLayout>

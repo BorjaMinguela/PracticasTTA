@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/textView"
-                    android:layout_weight="1" />
+                     />
 
                 <EditText
                     android:id="@+id/login"
@@ -54,13 +54,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/passView"
-                    android:layout_weight="1" />
+                     />
 
                 <EditText
                     android:id="@+id/pass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
 
                     />
 
