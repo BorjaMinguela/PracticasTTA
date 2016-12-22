@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">PracticasTTA</string>
     <string name="title_activity_login">Alumno TTA</string>
+    <string name="title_activity_main">Evaluación de TTA</string>
+    <string name="title_activity_nuevoTest">Nuevo Test</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_dni">Introduce DNI</string>
@@ -16,5 +19,4 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main2">Main2Activity</string>
 </resources>

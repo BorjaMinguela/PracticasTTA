@@ -3,6 +3,7 @@ package com.example.borja.practicastta;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -41,6 +42,21 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+    }
+
+    /**
+     * Loguearse e ir a la sigueinte pantalla
+     * @param view
+     */
+    public void login(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        String login= ((EditText)findViewById(R.id.login)).getText().toString();
+        String passwd= ((EditText)findViewById(R.id.pass)).getText().toString();
+        if(true){//TODO: Implementar autenticación
+            //intent.putExtra(MainActivity.EXTRA_LOGIN,login);
+            startActivity(intent);
+        }
+
     }
 }
 /**
