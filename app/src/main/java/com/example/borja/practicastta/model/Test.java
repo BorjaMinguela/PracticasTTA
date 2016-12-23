@@ -1,16 +1,21 @@
 package com.example.borja.practicastta.model;
 
+import java.util.List;
+
 /**
  * Created by borja on 23/12/16.
  */
 
 public class Test {
-    private String wording;
+    private List<Opcion> opciones;
 
-    public String getWording(){
-        return this.wording;
+
+    public List<Opcion> getOpciones() {
+        return opciones;
     }
-    public void setWording(String wording){
-        this.wording=wording;
+
+    public void setOpciones(List<Opcion> opciones) {
+        this.opciones = opciones;
     }
 }
+

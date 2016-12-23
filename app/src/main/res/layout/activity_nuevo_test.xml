@@ -20,7 +20,7 @@
         android:id="@+id/test_choices"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RadioButton
+        <!--<RadioButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Versión de la app"
@@ -39,7 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="42"
-            />
+            />-->
     </RadioGroup>
     <Button
         android:id="@+id/button_sendTest"
@@ -48,6 +48,15 @@
         android:text="Corregir"
         android:visibility="invisible"
         android:onClick="corregir"
+
+        />
+    <Button
+        android:id="@+id/button_verAyuda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ver_ayuda"
+        android:visibility="invisible"
+        android:onClick="verAyuda"
 
         />
 

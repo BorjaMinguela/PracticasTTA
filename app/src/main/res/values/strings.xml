@@ -16,6 +16,7 @@
     <string name="menu_nuevo_test">Nuevo Test</string>
     <string name="menu_nuevo_ejercicio">Nuevo Ejercicio</string>
     <string name="menu_nuevo_seguimiento">Nuevo Seguimiento</string>
+    <string name="ver_ayuda">Ver ayuda</string>
 
     <!--
     <string name="action_sign_in_short">Sign in</string>
