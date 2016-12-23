@@ -45,8 +45,9 @@
         android:id="@+id/button_sendTest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Corregir"
         android:visibility="invisible"
-        android:onClick="send"
+        android:onClick="corregir"
 
         />
 
