@@ -1,5 +1,6 @@
 package com.example.borja.practicastta.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,15 +8,15 @@ import java.util.List;
  */
 
 public class Test {
-    private List<Opcion> opciones;
+    private List<Opcion> opciones=new ArrayList<>();
 
 
     public List<Opcion> getOpciones() {
         return opciones;
     }
 
-    public void setOpciones(List<Opcion> opciones) {
-        this.opciones = opciones;
+    public void addOpcion(Opcion opcion) {
+        this.opciones.add(opcion);
     }
 }
 
