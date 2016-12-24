@@ -22,25 +22,25 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_test);
 
-//        Test test=this.getTest();
-//        if(test==null){
-//            Toast.makeText(getApplicationContext(), "test es null", Toast.LENGTH_SHORT).show();
-//        }
-//        if(test.getOpciones()==null){
-//            Toast.makeText(getApplicationContext(), "opciones es null", Toast.LENGTH_SHORT).show();
-//        }
-        //List<Opcion> opciones=getTest().getOpciones();
-//        Test test=new Test();
-//        test.setWording("La buena ;)");
+        Test test=this.getTest();
+        if(test==null){
+            Toast.makeText(getApplicationContext(), "test es null", Toast.LENGTH_SHORT).show();
+        }
+        if(test.getOpciones()==null){
+            Toast.makeText(getApplicationContext(), "opciones es null", Toast.LENGTH_SHORT).show();
+        }
+        List<Opcion> opciones=getTest().getOpciones();
+        //Test test=new Test();
+        //test.setWording("La buena ;)");
 
-//        for(int i=0;i<opciones.size();i++) {
-//            RadioGroup group = (RadioGroup) findViewById(R.id.test_choices);
-//            RadioButton radio = new RadioButton(this);
-//            radio.setText(opciones.get(i).getEnunciado());
-//            radio.setOnClickListener(this);
-//            group.addView(radio);
-//
-//        }
+        for(int i=0;i<opciones.size();i++) {
+            RadioGroup group = (RadioGroup) findViewById(R.id.test_choices);
+            RadioButton radio = new RadioButton(this);
+            radio.setText(opciones.get(i).getEnunciado());
+            radio.setOnClickListener(this);
+            group.addView(radio);
+
+        }
 
     }
 
