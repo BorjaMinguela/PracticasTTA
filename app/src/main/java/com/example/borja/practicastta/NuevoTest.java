@@ -1,14 +1,20 @@
 package com.example.borja.practicastta;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.borja.practicastta.model.Opcion;
 import com.example.borja.practicastta.model.Test;
@@ -47,8 +53,8 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
     public Test getTest(){//Datos del servidor hardcodeados
         Test test=new Test();
         String []opciones={"Versión de la app","Listado de componentes","Opciones del menú","42","La buena ;)"};
-        String []tipo={"text/html","text/html","text/html","correcta","text/html"};
-        String []advise={"Ayuda <b>muy</b> util","text","text","correcta","text"};
+        String []tipo={"text/html","text/html","video","correcta","text/html"};
+        String []advise={"Ayuda <b>muy</b> util","https://developer.android.com/training/index.html?hl=es","http://www.androidbegin.com/tutorial/AndroidCommercial.3gp","correcta","text"};
         for (int i=0;i<opciones.length;i++){
             Opcion opcion = new Opcion();
             opcion.setEnunciado(opciones[i]);
@@ -61,7 +67,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
     }
     @Override
     public void onClick(View v){
-        Toast.makeText(getApplicationContext(),"onCLick!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"onCLick!", Toast.LENGTH_SHORT).show();
         findViewById(R.id.button_sendTest).setVisibility(View.VISIBLE);
     }
 
@@ -98,18 +104,48 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         View selected=group.findViewById(group.getCheckedRadioButtonId());
         int selectedNum = group.indexOfChild(selected);
         String type=getTest().getOpciones().get(selectedNum).getAyudaType();
+        String advise=getTest().getOpciones().get(selectedNum).getAdvise();
+        LinearLayout layout = (LinearLayout) findViewById(R.id.activity_nuevo_test);
         switch (type){
             case "text/html":
-                WebView web = new WebView(this);
-                String advise=getTest().getOpciones().get(selectedNum).getAdvise();
-                web.loadData(advise,"text/html",null);
-                web.setBackgroundColor(Color.TRANSPARENT);
-                web.setLayerType(WebView.LAYER_TYPE_SOFTWARE,null);
-                LinearLayout layout = (LinearLayout)findViewById(R.id.activity_nuevo_test);
-                layout.removeView(findViewById(R.id.button_sendTest));
-                layout.addView(web);
+                if (!advise.substring(0,10).contains("://")) {
+                    WebView web = new WebView(this);
+
+                    web.loadData(advise, "text/html", null);
+                    web.setBackgroundColor(Color.TRANSPARENT);
+                    web.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
+
+                    layout.removeView(findViewById(R.id.button_sendTest));
+                    layout.addView(web);
+                }
+                else{
+                    Uri uri=Uri.parse(advise);
+                    Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+                    startActivity(intent);
+                }
                 break;
+            case "video":
+                VideoView video= new VideoView(this);
+                video.setVideoURI(Uri.parse(advise));
+                //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams()
+                MediaController controller = new MediaController(this){
+
+                    @Override
+                    public void hide(){
+
+                    }
+                    @Override
+                    public boolean dispatchKeyEvent(KeyEvent event){
+                        if(event.getKeyCode()==KeyEvent.KEYCODE_BACK) finish();
+                        return super.dispatchKeyEvent(event);
+                    }
+
+                };
+                controller.setAnchorView(video);
+                video.setMediaController(controller);
+                layout.addView(video);
         }
+        layout.removeView(findViewById(R.id.button_verAyuda));
 
     }
 }
