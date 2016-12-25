@@ -144,6 +144,10 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                 controller.setAnchorView(video);
                 video.setMediaController(controller);
                 layout.addView(video);
+                break;
+            case "audio":
+                //AudioPlayer audio=new AudioPlayer(this);
+                break;
         }
         layout.removeView(findViewById(R.id.button_verAyuda));
 
