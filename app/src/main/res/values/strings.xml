@@ -22,6 +22,8 @@
     <string name="sacar_foto">Sacar foto</string>
     <string name="grabar_audio">Grabar audio</string>
     <string name="grabar_video">Grabar vídeo</string>
+    <string name="no_camera">Se requiere de una cámara</string>
+    <string name="no_app">No Packet Manager</string>
 
     <!--
     <string name="action_sign_in_short">Sign in</string>

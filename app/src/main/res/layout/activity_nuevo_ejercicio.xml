@@ -22,22 +22,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/subir_fichero"
-        android:onClick="newTest"/>
+        android:onClick="subirFichero"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sacar_foto"
-        android:onClick="newTest"/>
+        android:onClick="sacarFoto"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/grabar_audio"
-        android:onClick="newTest"/>
+        android:onClick="grabarAudio"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/grabar_video"
-        android:onClick="newTest"/>
+        android:onClick="grabarVideo"/>
 
 
 </LinearLayout>
