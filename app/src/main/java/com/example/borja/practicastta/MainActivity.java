@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     public void newTest(View view){
         Intent intent = new Intent(this, NuevoTest.class);
         startActivity(intent);
-        }
+    }
+    public void newEjercicio(View view){
+        Intent intent = new Intent(this, NuevoEjercicio.class);
+        startActivity(intent);
+    }
 
     }

@@ -12,7 +12,6 @@ import java.io.IOException;
 /**
  * Created by borja on 25/12/16.
  */
-
 public class AudioPlayer implements MediaController.MediaPlayerControl, MediaPlayer.OnPreparedListener{
     private View view;
     private MediaPlayer player;

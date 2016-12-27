@@ -53,8 +53,8 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
     public Test getTest(){//Datos del servidor hardcodeados
         Test test=new Test();
         String []opciones={"Versión de la app","Listado de componentes","Opciones del menú","42","La buena ;)"};
-        String []tipo={"text/html","text/html","video","correcta","text/html"};
-        String []advise={"Ayuda <b>muy</b> util","https://developer.android.com/training/index.html?hl=es","http://www.androidbegin.com/tutorial/AndroidCommercial.3gp","correcta","text"};
+        String []tipo={"text/html","text/html","video","correcta","audio"};
+        String []advise={"Ayuda <b>muy</b> util","https://developer.android.com/training/index.html?hl=es","http://www.androidbegin.com/tutorial/AndroidCommercial.3gp","correcta","http://u017633.ehu.eus:28080/static/ServidorTta/AndroidManifest.mp4"};
         for (int i=0;i<opciones.length;i++){
             Opcion opcion = new Opcion();
             opcion.setEnunciado(opciones[i]);
@@ -146,7 +146,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                 layout.addView(video);
                 break;
             case "audio":
-                //AudioPlayer audio=new AudioPlayer(this);
+                //AudioPlayer audio=new AudioPlayer(findViewById(R.id.activity_nuevo_test));
                 break;
         }
         layout.removeView(findViewById(R.id.button_verAyuda));
