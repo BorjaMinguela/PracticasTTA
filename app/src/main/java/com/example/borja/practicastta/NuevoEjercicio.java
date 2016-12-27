@@ -1,5 +1,6 @@
 package com.example.borja.practicastta;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -42,6 +43,46 @@ public class NuevoEjercicio extends AppCompatActivity {
             }
             else
                 Toast.makeText(this, R.string.no_app,Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void grabarVideo(View view){
+        if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
+            Toast.makeText(this,R.string.no_camera,Toast.LENGTH_SHORT).show();
+        else{
+            Intent intent=new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+            if(intent.resolveActivity(getPackageManager())!=null)
+                startActivityForResult(intent,VIDEO_REQUEST_CODE);
+            else
+                Toast.makeText(this, R.string.no_app,Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    public void grabarAudio(View view){
+        if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_MICROPHONE))
+            Toast.makeText(this, R.string.no_micro,Toast.LENGTH_SHORT).show();
+        else{
+            Intent intent=new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+            if(intent.resolveActivity(getPackageManager())!=null)
+                startActivityForResult(intent,AUDIO_REQUEST_CODE);
+            else
+                Toast.makeText(this, R.string.no_app,Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode,int resultCode, Intent data){
+        if(resultCode != Activity.RESULT_OK)
+            return;
+        switch (requestCode){
+            case READ_REQUEST_CODE:
+            case VIDEO_REQUEST_CODE:
+            case AUDIO_REQUEST_CODE:
+            case PICTURE_REQUEST_CODE:
+                Toast.makeText(this,"Foto sacada",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 }
