@@ -21,8 +21,8 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/subir_fichero"/>
-        <!--android:onClick="subirFichero"-->
+        android:text="@string/subir_fichero"
+        android:onClick="subirFichero"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

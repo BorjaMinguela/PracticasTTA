@@ -3,9 +3,11 @@ package com.example.borja.practicastta;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -72,17 +74,51 @@ public class NuevoEjercicio extends AppCompatActivity {
         }
     }
 
+    public void subirFichero(View view){
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("*/*");
+        startActivityForResult(intent,READ_REQUEST_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode,int resultCode, Intent data){
         if(resultCode != Activity.RESULT_OK)
             return;
         switch (requestCode){
             case READ_REQUEST_CODE:
+                tratarFichero(data);
+                break;
             case VIDEO_REQUEST_CODE:
             case AUDIO_REQUEST_CODE:
             case PICTURE_REQUEST_CODE:
                 Toast.makeText(this,"Foto sacada",Toast.LENGTH_SHORT).show();
                 break;
+        }
+    }
+
+    public void tratarFichero(Intent data){
+        Uri uri=data.getData();
+        Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show();
+        Cursor cursor = null;
+        String nombre=null;
+        String size=null;
+        try{
+            cursor = this.getContentResolver().query(uri,null,null,null,null);
+            if (cursor != null && cursor.moveToFirst()) {
+                nombre=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                int sizeIndex=cursor.getColumnIndex(OpenableColumns.SIZE);
+                if(!cursor.isNull(sizeIndex)){
+                    size=cursor.getString(sizeIndex);
+                }
+                else{
+                    size="Unknown";
+                }
+                Toast.makeText(this,nombre, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,size+" Bytes", Toast.LENGTH_SHORT).show();
+            }
+        }finally {
+            cursor.close();
         }
     }
 }
