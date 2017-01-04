@@ -19,6 +19,7 @@ import android.widget.VideoView;
 import com.example.borja.practicastta.model.Opcion;
 import com.example.borja.practicastta.model.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 public class NuevoTest extends AppCompatActivity implements View.OnClickListener{
@@ -146,7 +147,12 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                 layout.addView(video);
                 break;
             case "audio":
-                //AudioPlayer audio=new AudioPlayer(findViewById(R.id.activity_nuevo_test));
+                AudioPlayer audio=new AudioPlayer(findViewById(R.id.activity_nuevo_test));
+                try {
+                    audio.setAudioUri(Uri.parse(advise));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
         layout.removeView(findViewById(R.id.button_verAyuda));
