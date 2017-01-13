@@ -17,7 +17,7 @@
     <string name="menu_nuevo_ejercicio">Nuevo Ejercicio</string>
     <string name="menu_nuevo_seguimiento">Nuevo Seguimiento</string>
     <string name="ver_ayuda">Ver ayuda</string>
-    <string name="enunciado_ejercicio">Explica cómo aplicarías el patrón de diseño MVP en el desarrollo de una app para Android</string>
+    <string name="enunciado_ejercicio">Ejemplo de enunciado</string>
     <string name="subir_fichero">Subir fichero</string>
     <string name="sacar_foto">Sacar foto</string>
     <string name="grabar_audio">Grabar audio</string>

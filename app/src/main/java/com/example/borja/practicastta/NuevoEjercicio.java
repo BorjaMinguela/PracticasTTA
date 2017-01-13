@@ -1,6 +1,7 @@
 package com.example.borja.practicastta;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.borja.practicastta.model.Ejercicio;
+import com.example.borja.practicastta.model.ProgressTask;
 import com.example.borja.practicastta.model.RestClient;
 
 import org.json.JSONException;
@@ -44,12 +46,27 @@ public class NuevoEjercicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ejercicio);
+        rest= new RestClient(getString(R.string.server_url));
         if(RestClient.getConnectivity(this)) {
             try {
-                rest= new RestClient(getString(R.string.server_url));
-                Ejercicio ejercicio = this.getEjercicio(1);
-                TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
-                textView.setText(ejercicio.getWording());
+                new ProgressTask<Ejercicio>(this) {
+                    @Override
+                    protected Ejercicio work() throws Exception {
+                        return getEjercicio(1);
+                    }
+
+                    @Override
+                    protected void onFinish(Ejercicio result) {
+                        TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
+                        String wording =result.getWording();
+                        Toast.makeText(context, wording, Toast.LENGTH_SHORT).show();
+                        textView.setText(result.getWording());
+
+                    }
+                }.execute();
+                //Ejercicio ejercicio = this.getEjercicio(1);
+                //TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
+                //textView.setText(ejercicio.getWording());
             } catch (Exception e) {
                 Toast.makeText(this, R.string.error_ejercicio, Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, e.toString(),Toast.LENGTH_LONG).show();
