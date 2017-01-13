@@ -3,8 +3,11 @@ package com.example.borja.practicastta;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +32,9 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.borja.practicastta.model.RestClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +55,18 @@ public class LoginActivity extends AppCompatActivity {
      * @param view
      */
     public void login(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        String login= ((EditText)findViewById(R.id.login)).getText().toString();
-        String passwd= ((EditText)findViewById(R.id.pass)).getText().toString();
-        if(true){//TODO: Implementar autenticación
-            //intent.putExtra(MainActivity.EXTRA_LOGIN,login);
-            startActivity(intent);
+        if(RestClient.getConnectivity(this)) {
+            //Toast.makeText(this,"Hay conectividad",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            String login = ((EditText) findViewById(R.id.login)).getText().toString();
+            String passwd = ((EditText) findViewById(R.id.pass)).getText().toString();
+            if (true) {//TODO: Implementar autenticación
+                //intent.putExtra(MainActivity.EXTRA_LOGIN,login);
+                startActivity(intent);
+            }
+        }
+        else{
+            Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
         }
 
     }

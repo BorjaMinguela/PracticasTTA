@@ -25,6 +25,7 @@
     <string name="no_camera">Se requiere de una cámara</string>
     <string name="no_app">No Packet Manager</string>
     <string name="no_micro">Se requiere de un micrófono</string>
+    <string name="no_internet">Se necesita conexión a Internet</string>
 
     <!--
     <string name="action_sign_in_short">Sign in</string>
