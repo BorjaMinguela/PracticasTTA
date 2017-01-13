@@ -11,6 +11,7 @@ import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.borja.practicastta.model.Ejercicio;
@@ -28,7 +29,8 @@ public class NuevoEjercicio extends AppCompatActivity {
     final int AUDIO_REQUEST_CODE=3;
     final int PICTURE_REQUEST_CODE=4;
 
-    private RestClient rest = new RestClient(getString(R.string.server_url));
+    private RestClient rest;
+
 
     public Ejercicio getEjercicio(int id) throws IOException,JSONException{
         JSONObject json = rest.getJson(String.format("getExercise?id=%d",id));
@@ -42,6 +44,19 @@ public class NuevoEjercicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ejercicio);
+        rest= new RestClient(getString(R.string.server_url));
+        if(RestClient.getConnectivity(this)) {
+            try {
+                Ejercicio ejercicio = this.getEjercicio(1);
+                TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
+                textView.setText(ejercicio.getWording());
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.error_ejercicio, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.toString(),Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+            Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
     }
 
 

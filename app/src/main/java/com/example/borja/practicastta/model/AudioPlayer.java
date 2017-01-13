@@ -1,4 +1,4 @@
-package com.example.borja.practicastta;
+package com.example.borja.practicastta.model;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;

@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.MediaController;
@@ -16,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.borja.practicastta.model.AudioPlayer;
 import com.example.borja.practicastta.model.Opcion;
 import com.example.borja.practicastta.model.Test;
 
