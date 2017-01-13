@@ -13,6 +13,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.borja.practicastta.model.Ejercicio;
+import com.example.borja.practicastta.model.RestClient;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -22,11 +28,23 @@ public class NuevoEjercicio extends AppCompatActivity {
     final int AUDIO_REQUEST_CODE=3;
     final int PICTURE_REQUEST_CODE=4;
 
+    private RestClient rest = new RestClient(getString(R.string.server_url));
+
+    public Ejercicio getEjercicio(int id) throws IOException,JSONException{
+        JSONObject json = rest.getJson(String.format("getExercise?id=%d",id));
+        Ejercicio ejercicio= new Ejercicio();
+        ejercicio.setId(json.getInt("id"));
+        ejercicio.setWording(json.getString("wording"));
+        return ejercicio;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ejercicio);
     }
+
+
     public void sacarFoto(View view){
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
             Toast.makeText(this,R.string.no_camera,Toast.LENGTH_SHORT).show();
@@ -92,7 +110,7 @@ public class NuevoEjercicio extends AppCompatActivity {
             case VIDEO_REQUEST_CODE:
             case AUDIO_REQUEST_CODE:
             case PICTURE_REQUEST_CODE:
-                Toast.makeText(this,"Foto sacada",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.foto_sacada,Toast.LENGTH_SHORT).show();
                 break;
         }
     }

@@ -120,6 +120,7 @@ public class RestClient {
             conn.setRequestProperty("Content-Type","application/json; charset=UTF-8");
             PrintWriter pw = new PrintWriter(conn.getOutputStream());
             pw.print(json.toString());
+            pw.close();
             return conn.getResponseCode();
         }
         finally {

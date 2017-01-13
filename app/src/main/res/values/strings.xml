@@ -26,6 +26,8 @@
     <string name="no_app">No Packet Manager</string>
     <string name="no_micro">Se requiere de un micrófono</string>
     <string name="no_internet">Se necesita conexión a Internet</string>
+    <string name="server_url">http//u017633.ehu.eus:28080/ServidorTta/rest/tta</string>
+    <string name="foto_sacada">Foto sacada</string>
 
     <!--
     <string name="action_sign_in_short">Sign in</string>
