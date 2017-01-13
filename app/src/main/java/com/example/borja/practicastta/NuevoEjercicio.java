@@ -44,9 +44,9 @@ public class NuevoEjercicio extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ejercicio);
-        rest= new RestClient(getString(R.string.server_url));
         if(RestClient.getConnectivity(this)) {
             try {
+                rest= new RestClient(getString(R.string.server_url));
                 Ejercicio ejercicio = this.getEjercicio(1);
                 TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
                 textView.setText(ejercicio.getWording());
