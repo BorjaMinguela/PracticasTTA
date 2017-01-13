@@ -47,6 +47,7 @@ public class NuevoEjercicio extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ejercicio);
         rest= new RestClient(getString(R.string.server_url));
+        rest.setHttpBasicAuth("12345678A","tta");
         if(RestClient.getConnectivity(this)) {
             try {
                 new ProgressTask<Ejercicio>(this) {
@@ -59,7 +60,7 @@ public class NuevoEjercicio extends AppCompatActivity {
                     protected void onFinish(Ejercicio result) {
                         TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
                         String wording =result.getWording();
-                        Toast.makeText(context, wording, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, wording, Toast.LENGTH_SHORT).show();
                         textView.setText(result.getWording());
 
                     }

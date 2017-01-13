@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Base64;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,15 +36,15 @@ public class RestClient {
 
     public static boolean getConnectivity(Activity activity){
         ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networfInfo = connMgr.getActiveNetworkInfo();
-        if(networfInfo!=null && networfInfo.isConnected()) {
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if(networkInfo!=null && networkInfo.isConnected()) {
             return true;
         }
         else return false;
     }
 
     public void setHttpBasicAuth(String user, String passwd){
-        String basicAuth = Base64.encodeToString(String.format("%s%s",user,passwd).getBytes(),Base64.DEFAULT);
+        String basicAuth = Base64.encodeToString(String.format("%s:%s",user,passwd).getBytes(),Base64.DEFAULT);
         properties.put(AUTH,String.format("Basic %s",basicAuth));
     }
 
@@ -74,7 +75,15 @@ public class RestClient {
             conn = getConnection(path);
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             return br.readLine();
+            /*String line=br.readLine();
+            Log.d("tag",line);
+            return line;*/
         }
+        /*catch (Exception e){
+            String error =e.toString();
+            Log.e("error",error);
+            return "Esto no se deberia ver";
+        }*/
         finally{
             if(conn!=null)
                 conn.disconnect();
