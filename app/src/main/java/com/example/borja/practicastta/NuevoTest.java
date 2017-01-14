@@ -81,7 +81,10 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                 opcion.setEnunciado(item.optString("answer"));
                 opcion.setCoorecta(item.getBoolean("correct"));
                 opcion.setAdvise(item.optString("advise",null));
-                opcion.setAyudaType(item.optString("mime",null));
+                if(item.optJSONObject("resourceType")!=null)
+                    opcion.setAyudaType(item.getJSONObject("resourceType").optString("mime",null));
+                else
+                    opcion.setAyudaType("none");
                 test.addOpcion(opcion);
             }
             return test;
@@ -133,12 +136,11 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
     }
 
     public void corregir(View view){
-        int correct=3;
-
+        int correct=test.getCorrect();
         RadioGroup group = (RadioGroup)findViewById(R.id.test_choices);
         View selected=group.findViewById(group.getCheckedRadioButtonId());
         int selectedNum = group.indexOfChild(selected);
-        View correctOption=group.getChildAt(correct);
+        //View correctOption=group.getChildAt(correct);
         int choices = group.getChildCount();
         for (int i=0;i<choices;i++){
             group.getChildAt(i).setEnabled(false);
@@ -185,7 +187,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                     startActivity(intent);
                 }
                 break;
-            case "video":
+            case "video/mp4":
                 VideoView video= new VideoView(this);
                 video.setVideoURI(Uri.parse(advise));
                 //ViewGroup.LayoutParams params = new ViewGroup.LayoutParams()
@@ -206,7 +208,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
                 video.setMediaController(controller);
                 layout.addView(video);
                 break;
-            case "audio":
+            case "audio/mpeg":
                 AudioPlayer audio=new AudioPlayer(findViewById(R.id.activity_nuevo_test));
                 try {
                     audio.setAudioUri(Uri.parse(advise));

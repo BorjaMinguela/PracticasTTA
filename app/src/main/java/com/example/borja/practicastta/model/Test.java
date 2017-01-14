@@ -27,5 +27,15 @@ public class Test {
     public void setWording(String wording) {
         this.wording = wording;
     }
+
+    public int getCorrect(){
+        int correct = -1;
+        for(int i=0;i<opciones.size();i++){
+            if(opciones.get(i).isCoorecta())
+                correct=i;
+        }
+        return correct;
+    }
+
 }
 
