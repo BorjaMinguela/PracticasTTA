@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class NuevoEjercicio extends AppCompatActivity {
     final int READ_REQUEST_CODE=1;
@@ -149,15 +152,14 @@ public class NuevoEjercicio extends AppCompatActivity {
     }
 
     public void tratarFichero(Intent data){
-        Uri uri=data.getData();
+        final Uri uri=data.getData();
         Toast.makeText(this,uri.toString(),Toast.LENGTH_SHORT).show();
         Cursor cursor = null;
-        String nombre=null;
         String size=null;
         try{
             cursor = this.getContentResolver().query(uri,null,null,null,null);
             if (cursor != null && cursor.moveToFirst()) {
-                nombre=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                final String nombre=cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                 int sizeIndex=cursor.getColumnIndex(OpenableColumns.SIZE);
                 if(!cursor.isNull(sizeIndex)){
                     size=cursor.getString(sizeIndex);
@@ -167,9 +169,41 @@ public class NuevoEjercicio extends AppCompatActivity {
                 }
                 Toast.makeText(this,nombre, Toast.LENGTH_SHORT).show();
                 Toast.makeText(this,size+" Bytes", Toast.LENGTH_SHORT).show();
+                if(RestClient.getConnectivity(this)) {
+                    try {
+                        new ProgressTask<Integer>(this) {
+                            @Override
+                            protected Integer work() throws Exception {
+                                return uploadFile(getContentResolver().openInputStream(uri),nombre);
+                            }
+
+                            @Override
+                            protected void onFinish(Integer result) {
+                                int response=result;
+                                Log.i("Respuesta",Integer.toString(result));
+                            }
+                        }.execute();
+                    } catch (Exception e) {
+                    }
+                }
+                else
+                    Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
             }
         }finally {
             cursor.close();
         }
+    }
+
+    public int uploadFile(InputStream is,String fileName){
+        try {
+            int response=rest.postFile("postExercise?user=1&id=1",is,fileName);
+            return response;
+        }
+        catch (Exception e){
+            String error= e.toString();
+            Log.e("error file",error);
+            return -1;
+        }
+
     }
 }
