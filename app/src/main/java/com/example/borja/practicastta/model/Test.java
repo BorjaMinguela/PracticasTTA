@@ -8,6 +8,7 @@ import java.util.List;
  */
 
 public class Test {
+    private String wording;
     private List<Opcion> opciones=new ArrayList<>();
 
 
@@ -17,6 +18,14 @@ public class Test {
 
     public void addOpcion(Opcion opcion) {
         this.opciones.add(opcion);
+    }
+
+    public String getWording() {
+        return wording;
+    }
+
+    public void setWording(String wording) {
+        this.wording = wording;
     }
 }
 
