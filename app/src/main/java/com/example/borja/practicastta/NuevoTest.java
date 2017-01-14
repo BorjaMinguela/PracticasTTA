@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
@@ -93,6 +94,8 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
             return null;
         }
 
+
+
         /**String []opciones={"Versión de la app","Listado de componentes","Opciones del menú","42","La buena ;)"};
         String []tipo={"text/html","text/html","video","correcta","audio"};
         String []advise={"Ayuda <b>muy</b> util","https://developer.android.com/training/index.html?hl=es","http://www.androidbegin.com/tutorial/AndroidCommercial.3gp","correcta","http://u017633.ehu.eus:28080/static/ServidorTta/AndroidManifest.mp4"};
@@ -107,6 +110,22 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         return test;*/
     }
 
+    public int uploadResult(int choiceId){
+        try {
+            //rest= new RestClient(getString(R.string.server_url));
+            //rest.setHttpBasicAuth("12345678A","tta");
+            JSONObject json = new JSONObject();
+            json.put("userId", 1);
+            json.put("choiceId",choiceId);
+            return rest.postJson(json,"postChoice");
+
+        }
+        catch (Exception e){
+            return -1;
+        }
+
+    }
+
     public void drawOpciones(){
         if(test==null){
             Toast.makeText(getApplicationContext(), "test es null", Toast.LENGTH_SHORT).show();
@@ -118,7 +137,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         //Test test=new Test();
         //test.setWording("La buena ;)");
 
-        Toast.makeText(getApplicationContext(), opciones.get(0).getEnunciado(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), opciones.get(0).getEnunciado(), Toast.LENGTH_SHORT).show();
         for(int i=0;i<opciones.size();i++) {
             RadioGroup group = (RadioGroup) findViewById(R.id.test_choices);
             RadioButton radio = new RadioButton(this);
@@ -139,7 +158,7 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         int correct=test.getCorrect();
         RadioGroup group = (RadioGroup)findViewById(R.id.test_choices);
         View selected=group.findViewById(group.getCheckedRadioButtonId());
-        int selectedNum = group.indexOfChild(selected);
+        final int selectedNum = group.indexOfChild(selected);
         //View correctOption=group.getChildAt(correct);
         int choices = group.getChildCount();
         for (int i=0;i<choices;i++){
@@ -159,6 +178,29 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         else{
             Toast.makeText(getApplicationContext(),"Correcto!", Toast.LENGTH_SHORT).show();
         }
+
+        if(RestClient.getConnectivity(this)) {
+            try {
+                new ProgressTask<Integer>(this) {
+                    @Override
+                    protected Integer work() throws Exception {
+                        int response=uploadResult(selectedNum+1);
+                        return response;
+                    }
+
+                    @Override
+                    protected void onFinish(Integer result) {
+                        int response=result;
+                        Log.i("Server response",Integer.toString(response));
+                    }
+                }.execute();
+            } catch (Exception e) {
+                Toast.makeText(this, R.string.error_ejercicio, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.toString(),Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+            Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
 
     }
 
