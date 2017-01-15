@@ -34,6 +34,8 @@ public class NuevoEjercicio extends AppCompatActivity {
     final int AUDIO_REQUEST_CODE=3;
     final int PICTURE_REQUEST_CODE=4;
 
+    Uri mediaUri;
+
     private RestClient rest;
 
 
@@ -80,6 +82,22 @@ public class NuevoEjercicio extends AppCompatActivity {
             Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mediaUri != null) {
+            outState.putString("cameraImageUri", mediaUri.toString());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey("cameraImageUri")) {
+            mediaUri = Uri.parse(savedInstanceState.getString("cameraImageUri"));
+        }
+    }
+
 
     public void sacarFoto(View view){
         if(!getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA))
@@ -90,8 +108,8 @@ public class NuevoEjercicio extends AppCompatActivity {
                 File dir= Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
                 try{
                     File file=File.createTempFile("tta",".jpg",dir);
-                    Uri pictureUri= Uri.fromFile(file);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT,pictureUri);
+                    mediaUri= Uri.fromFile(file);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT,mediaUri);
                     startActivityForResult(intent,PICTURE_REQUEST_CODE);
                 }catch (IOException e){
 
@@ -141,14 +159,38 @@ public class NuevoEjercicio extends AppCompatActivity {
             return;
         switch (requestCode){
             case READ_REQUEST_CODE:
-                tratarFichero(data);
-                break;
             case VIDEO_REQUEST_CODE:
             case AUDIO_REQUEST_CODE:
+                tratarFichero(data);
+                break;
             case PICTURE_REQUEST_CODE:
+                tratarMedia(mediaUri);
                 Toast.makeText(this, R.string.foto_sacada,Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    public void tratarMedia(final Uri uri){
+        final String nombre = uri.getLastPathSegment();
+        if(RestClient.getConnectivity(this)) {
+            try {
+                new ProgressTask<Integer>(this) {
+                    @Override
+                    protected Integer work() throws Exception {
+                        return uploadFile(getContentResolver().openInputStream(uri),nombre);
+                    }
+
+                    @Override
+                    protected void onFinish(Integer result) {
+                        int response=result;
+                        Log.i("Respuesta",Integer.toString(response));
+                    }
+                }.execute();
+            } catch (Exception e) {
+            }
+        }
+        else
+            Toast.makeText(this, R.string.no_internet,Toast.LENGTH_SHORT).show();
     }
 
     public void tratarFichero(Intent data){
@@ -180,7 +222,7 @@ public class NuevoEjercicio extends AppCompatActivity {
                             @Override
                             protected void onFinish(Integer result) {
                                 int response=result;
-                                Log.i("Respuesta",Integer.toString(result));
+                                Log.i("Respuesta",Integer.toString(response));
                             }
                         }.execute();
                     } catch (Exception e) {
@@ -195,6 +237,8 @@ public class NuevoEjercicio extends AppCompatActivity {
     }
 
     public int uploadFile(InputStream is,String fileName){
+        rest= new RestClient(getString(R.string.server_url));
+        rest.setHttpBasicAuth("12345678A","tta");
         try {
             int response=rest.postFile("postExercise?user=1&id=1",is,fileName);
             return response;
