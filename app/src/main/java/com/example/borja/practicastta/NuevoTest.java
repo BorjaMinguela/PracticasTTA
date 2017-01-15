@@ -93,27 +93,10 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         catch (Exception e){
             return null;
         }
-
-
-
-        /**String []opciones={"Versión de la app","Listado de componentes","Opciones del menú","42","La buena ;)"};
-        String []tipo={"text/html","text/html","video","correcta","audio"};
-        String []advise={"Ayuda <b>muy</b> util","https://developer.android.com/training/index.html?hl=es","http://www.androidbegin.com/tutorial/AndroidCommercial.3gp","correcta","http://u017633.ehu.eus:28080/static/ServidorTta/AndroidManifest.mp4"};
-        for (int i=0;i<opciones.length;i++){
-            Opcion opcion = new Opcion();
-            opcion.setEnunciado(opciones[i]);
-            opcion.setAyudaType(tipo[i]);
-            opcion.setAdvise(advise[i]);
-            test.addOpcion(opcion);
-        }
-
-        return test;*/
     }
 
     public int uploadResult(int choiceId){
         try {
-            //rest= new RestClient(getString(R.string.server_url));
-            //rest.setHttpBasicAuth("12345678A","tta");
             JSONObject json = new JSONObject();
             json.put("userId", 1);
             json.put("choiceId",choiceId);
@@ -134,10 +117,6 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
             Toast.makeText(getApplicationContext(), "opciones es null", Toast.LENGTH_SHORT).show();
         }
         List<Opcion> opciones=test.getOpciones();
-        //Test test=new Test();
-        //test.setWording("La buena ;)");
-
-        //Toast.makeText(getApplicationContext(), opciones.get(0).getEnunciado(), Toast.LENGTH_SHORT).show();
         for(int i=0;i<opciones.size();i++) {
             RadioGroup group = (RadioGroup) findViewById(R.id.test_choices);
             RadioButton radio = new RadioButton(this);
@@ -159,7 +138,6 @@ public class NuevoTest extends AppCompatActivity implements View.OnClickListener
         RadioGroup group = (RadioGroup)findViewById(R.id.test_choices);
         View selected=group.findViewById(group.getCheckedRadioButtonId());
         final int selectedNum = group.indexOfChild(selected);
-        //View correctOption=group.getChildAt(correct);
         int choices = group.getChildCount();
         for (int i=0;i<choices;i++){
             group.getChildAt(i).setEnabled(false);

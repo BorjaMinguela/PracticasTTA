@@ -65,14 +65,10 @@ public class NuevoEjercicio extends AppCompatActivity {
                     protected void onFinish(Ejercicio result) {
                         TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
                         String wording =result.getWording();
-                        //Toast.makeText(context, wording, Toast.LENGTH_SHORT).show();
                         textView.setText(result.getWording());
 
                     }
                 }.execute();
-                //Ejercicio ejercicio = this.getEjercicio(1);
-                //TextView textView = (TextView) findViewById(R.id.enunciadoEjercicio);
-                //textView.setText(ejercicio.getWording());
             } catch (Exception e) {
                 Toast.makeText(this, R.string.error_ejercicio, Toast.LENGTH_SHORT).show();
                 Toast.makeText(this, e.toString(),Toast.LENGTH_LONG).show();

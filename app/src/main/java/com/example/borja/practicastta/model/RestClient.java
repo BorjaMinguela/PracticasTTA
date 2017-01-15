@@ -75,15 +75,7 @@ public class RestClient {
             conn = getConnection(path);
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             return br.readLine();
-            /*String line=br.readLine();
-            Log.d("tag",line);
-            return line;*/
         }
-        /*catch (Exception e){
-            String error =e.toString();
-            Log.e("error",error);
-            return "Esto no se deberia ver";
-        }*/
         finally{
             if(conn!=null)
                 conn.disconnect();
